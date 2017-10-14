@@ -2,8 +2,11 @@ import * as React from 'react';
 import './Square.css';
 
 function Square(props: SquareProps) {
+    let classes = 'square';
+    if(props.selected)
+        classes += ' selected';
     return (
-        <button className="square" onClick={props.onClick}>
+        <button className={classes} onClick={props.onClick}>
         {props.value}
         </button>
     );
@@ -12,6 +15,7 @@ function Square(props: SquareProps) {
 export default Square;
 
 interface SquareProps {
+    selected: boolean;
     value: string;
     onClick(): void;
 }

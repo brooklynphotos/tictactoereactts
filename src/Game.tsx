@@ -58,6 +58,7 @@ class Game extends React.Component<GameProps,GameState> {
             <div className="game">
             <div className="game-board">
                 <Board 
+                    selectedCell={current.cell}
                     getCellId={cell=>this.flattenIndex(cell)} 
                     dimSize={this.size} 
                     getPositionLabel={getPLFunc} 
