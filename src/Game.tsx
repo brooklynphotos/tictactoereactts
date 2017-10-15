@@ -14,7 +14,8 @@ class Game extends React.Component<GameProps,GameState> {
                 squares: Array(this.size*this.size).fill(null)
             }],
             stepNumber: 0,
-            xIsNext: true
+            xIsNext: true,
+            sortAsc: true
         };
     }
     jumpTo(move: number) {
@@ -30,7 +31,7 @@ class Game extends React.Component<GameProps,GameState> {
         const moves = history.map((step,move)=>{
             // possible that cell is undefined if we are in the first spot
             let label: string;
-            if(move===0){
+            if((this.state.sortAsc && move===0)||(!this.state.sortAsc && move===history.length-1)){
                 label = '#1';
             }else{
                 if(!step.cell){
@@ -67,6 +68,7 @@ class Game extends React.Component<GameProps,GameState> {
             </div>
             <div className="game-info">
                 <div>{status}</div>
+                <button onClick={this.sortMoves.bind(this)}>Sort {this.state.sortAsc ? 'ASC' : 'DESC'}</button>
                 <ol>{moves}</ol>
             </div>
             </div>
@@ -74,6 +76,11 @@ class Game extends React.Component<GameProps,GameState> {
     }
     flattenIndex(cell: MatrixCell) {
         return cell.x + (cell.y*this.size);
+    }
+    sortMoves(){
+        const sortAsc = this.state.sortAsc;
+        const history = this.state.history.splice(0);
+        this.setState({history: history.reverse(), sortAsc: !sortAsc});
     }
     handleClick(cell: MatrixCell) {
         const flatIndex = this.flattenIndex(cell);
@@ -122,6 +129,7 @@ interface GameState {
     xIsNext: boolean;
     history: History[];
     stepNumber: number;
+    sortAsc: boolean;
 }
 
 interface History {
