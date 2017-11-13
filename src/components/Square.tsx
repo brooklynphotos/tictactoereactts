@@ -1,13 +1,15 @@
 import * as React from 'react';
+import MatrixCell from '../utils/MatrixCell';
 import './Square.css';
 
 function Square(props: SquareProps) {
     let classes = 'square';
-    if(props.selected)
+    const cell = props.cell;
+    if(cell.selected)
         classes += ' selected';
     return (
         <button className={classes} onClick={props.onClick}>
-        {props.value}
+        {cell.player}
         </button>
     );
 }
@@ -15,7 +17,6 @@ function Square(props: SquareProps) {
 export default Square;
 
 interface SquareProps {
-    selected: boolean;
-    value: string;
+    cell: MatrixCell;
     onClick(): void;
 }
